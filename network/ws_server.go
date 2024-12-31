@@ -2,12 +2,13 @@ package network
 
 import (
 	"crypto/tls"
-	"github.com/gorilla/websocket"
-	"github.com/name5566/leaf/log"
 	"net"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/gorilla/websocket"
+	"github.com/name5566/leaf/log"
 )
 
 type WSServer struct {
@@ -36,7 +37,7 @@ type WSHandler struct {
 
 func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", 405)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	conn, err := handler.upgrader.Upgrade(w, r, nil)
